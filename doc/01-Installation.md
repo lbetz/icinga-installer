@@ -69,8 +69,8 @@ Username `<username>` and password `<password>` must be set according to your su
 apt install wget apt-transport-https gpg
 get -O - https://packages.netways.de/netways-repo.asc | apt-key add -
 echo "deb https://packages.netways.de/extras/debian bullseye main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O - https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | apt-key add -
-echo "deb https://apt.puppetlabs.com bullseye puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O - https://apt.puppet.com/DEB-GPG-KEY-future | apt-key add -
+echo "deb https://apt.puppet.com bullseye puppet8" | tee /etc/apt/sources.list.d/puppet8.list
 apt update
 
 apt install -y icinga-installer
@@ -82,8 +82,8 @@ apt install -y icinga-installer
 apt install -y wget apt-transport-https gpg
 wget -O /etc/apt/keyrings/netways-repo.asc  https://packages.netways.de/netways-repo.asc
 echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/debian bookworm main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com bookworm puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O -  https://apt.puppet.com/DEB-GPG-KEY-future | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppet.com bookworm puppet8" | tee /etc/apt/sources.list.d/puppet8.list
 apt update
 
 apt install -y icinga-installer
@@ -95,8 +95,8 @@ apt install -y icinga-installer
 apt install -y ca-certificates wget apt-transport-https gpg
 wget -O - https://packages.netways.de/netways-repo.asc | apt-key add -
 echo "deb https://packages.netways.de/extras/ubuntu focal main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O - https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | apt-key add -
-echo "deb https://apt.puppetlabs.com focal puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O - https://apt.puppet.com/DEB-GPG-KEY-future | apt-key add -
+echo "deb https://apt.puppet.com focal puppet8" | tee /etc/apt/sources.list.d/puppet8.list
 apt update
 
 apt install -y icinga-installer
@@ -108,8 +108,8 @@ apt install -y icinga-installer
 apt install wget apt-transport-https gpg
 wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu jammy main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com jammy puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O -  https://apt.puppet.com/DEB-GPG-KEY-future | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppet.com jammy puppet8" | tee /etc/apt/sources.list.d/puppet8.list
 apt update
 
 apt install -y icinga-installer
@@ -121,8 +121,8 @@ apt install -y icinga-installer
 apt install wget apt-transport-https gpg
 wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu noble main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com noble puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O -  https://apt.puppet.com/DEB-GPG-KEY-future | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppet.com noble puppet8" | tee /etc/apt/sources.list.d/puppet8.list
 apt update
 
 apt install -y icinga-installer
