@@ -19,7 +19,7 @@ instructions target fresh systems; external installer packages must also allow
 Icinga Web 2 >= v2.9 recommends PHP 7.3 or higher, so we have to change the default package module for PHP!
 
 ```bash
-dnf install -y https://packages.netways.de/extras/epel/8/noarch/netways-extras-release/netways-extras-release-8-1.el8.netways.noarch.rpm
+dnf install -y https://packages.private.prefork.de/epel/8/Packages/p/prefork-packages-1.0.0-1.el8.noarch.rpm
 dnf install -y https://yum.voxpupuli.org/openvox8-release-el-8.noarch.rpm
 dnf install -y openvox-agent
 
@@ -51,7 +51,7 @@ Username `<username>` and password `<password>` must be set according to your su
 **Notice**: The Installer supports SELinux only for Icinga 2 out of the box. So it makes no sense to set SELinux to `enforce` for server systems but you are able to do that for agents or workers.
 
 ```bash
-dnf install -y https://packages.netways.de/extras/epel/9/noarch/netways-extras-release/netways-extras-release-9-1.el9.netways.noarch.rpm
+dnf install -y https://packages.private.prefork.de/epel/9/Packages/p/prefork-packages-1.0.0-1.el9.noarch.rpm
 dnf install -y https://yum.voxpupuli.org/openvox8-release-el-9.noarch.rpm
 dnf install -y openvox-agent
 
@@ -81,8 +81,9 @@ Username `<username>` and password `<password>` must be set according to your su
 apt update
 apt install -y ca-certificates wget apt-transport-https gpg
 install -d -m 0755 /etc/apt/keyrings
-wget -O /etc/apt/keyrings/netways-repo.asc https://packages.netways.de/netways-repo.asc
-echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/debian bullseye main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /etc/apt/keyrings/prefork-packages.asc https://packages.private.prefork.de/keys/prefork-packages.asc
+chmod 0644 /etc/apt/keyrings/prefork-packages.asc
+echo "deb [signed-by=/etc/apt/keyrings/prefork-packages.asc] https://packages.private.prefork.de/debian bullseye main" | tee /etc/apt/sources.list.d/prefork-packages.list
 wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-debian11.deb
 dpkg -i /tmp/openvox8-release.deb
 apt update
@@ -97,8 +98,9 @@ apt install -y icinga-installer
 apt update
 apt install -y ca-certificates wget apt-transport-https gpg
 install -d -m 0755 /etc/apt/keyrings
-wget -O /etc/apt/keyrings/netways-repo.asc  https://packages.netways.de/netways-repo.asc
-echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/debian bookworm main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /etc/apt/keyrings/prefork-packages.asc https://packages.private.prefork.de/keys/prefork-packages.asc
+chmod 0644 /etc/apt/keyrings/prefork-packages.asc
+echo "deb [signed-by=/etc/apt/keyrings/prefork-packages.asc] https://packages.private.prefork.de/debian bookworm main" | tee /etc/apt/sources.list.d/prefork-packages.list
 wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-debian12.deb
 dpkg -i /tmp/openvox8-release.deb
 apt update
@@ -109,19 +111,9 @@ apt install -y icinga-installer
 
 ## Ubuntu Focal Fossa:
 
-```bash
-apt update
-apt install -y ca-certificates wget apt-transport-https gpg
-install -d -m 0755 /etc/apt/keyrings
-wget -O /etc/apt/keyrings/netways-repo.asc https://packages.netways.de/netways-repo.asc
-echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/ubuntu focal main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu20.04.deb
-dpkg -i /tmp/openvox8-release.deb
-apt update
-
-apt install -y openvox-agent
-apt install -y icinga-installer
-```
+The Prefork repository does not provide a `focal` suite. Use Ubuntu Jammy or
+Noble for installation from this repository; do not use packages from another
+Ubuntu release on Focal.
 
 ## Ubuntu Jammy Jellyfish:
 
@@ -129,8 +121,9 @@ apt install -y icinga-installer
 apt update
 apt install -y ca-certificates wget apt-transport-https gpg
 install -d -m 0755 /etc/apt/keyrings
-wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu jammy main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /etc/apt/keyrings/prefork-packages.asc https://packages.private.prefork.de/keys/prefork-packages.asc
+chmod 0644 /etc/apt/keyrings/prefork-packages.asc
+echo "deb [signed-by=/etc/apt/keyrings/prefork-packages.asc] https://packages.private.prefork.de/ubuntu jammy main" | tee /etc/apt/sources.list.d/prefork-packages.list
 wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu22.04.deb
 dpkg -i /tmp/openvox8-release.deb
 apt update
@@ -145,8 +138,9 @@ apt install -y icinga-installer
 apt update
 apt install -y ca-certificates wget apt-transport-https gpg
 install -d -m 0755 /etc/apt/keyrings
-wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu noble main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /etc/apt/keyrings/prefork-packages.asc https://packages.private.prefork.de/keys/prefork-packages.asc
+chmod 0644 /etc/apt/keyrings/prefork-packages.asc
+echo "deb [signed-by=/etc/apt/keyrings/prefork-packages.asc] https://packages.private.prefork.de/ubuntu noble main" | tee /etc/apt/sources.list.d/prefork-packages.list
 wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu24.04.deb
 dpkg -i /tmp/openvox8-release.deb
 apt update

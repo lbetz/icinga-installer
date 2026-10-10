@@ -28,7 +28,7 @@ Generate [REFERENCE.md] via [OpenVox Strings]
 ```
 
 ## 3. Version
-Version numbers are incremented regarding the [SemVer 1.0.0] specification. 
+Version numbers are incremented regarding the [SemVer 1.0.0] specification.
 Update the version number in `metadata.json` of puppet module `install`.
 
 ## 4. Changelog

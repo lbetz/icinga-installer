@@ -2,6 +2,18 @@
 
 All extension and adjustments made here refer to file `/etc/icinga-installer/custom-hiera.yaml`.
 
+## Installer Package Repository
+
+The [installation instructions](01-Installation.md) use
+[Prefork](https://packages.private.prefork.de/) instead of NETWAYS Extras for
+the installer packages. Its public signing key is
+[prefork-packages.asc](https://packages.private.prefork.de/keys/prefork-packages.asc).
+
+Key fingerprint: `0888 B45B A868 AC6A 275D 08B1 B51C 56A5 9A16 F682`.
+
+This changes the documented installation repository only. The Puppet module's
+repository identifiers below and its runtime defaults remain unchanged.
+
 ## Subscription for RHEL/CentOS/Rocky/AlmaLinux 8 and higher
 
 ```yaml
@@ -48,7 +60,7 @@ icinga::repos:
     key:
       source: https://repo.example.com/debian/bullseye.asc
 ```
-    
+
 Also the Backports repo on Debian can be configured like the apt class of course, see [apt::backports](https://github.com/puppetlabs/puppetlabs-apt/blob/main/REFERENCE.md#apt--backports).
 
 NOTICE: Backports is required for Debian Buster!
