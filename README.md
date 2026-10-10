@@ -1,11 +1,17 @@
 # Simple installer for the Icinga software stack
 
-The `icinga-installer` is a tool to install and manage your Icinga instance. It is based on Puppet and uses `YAML` configuration.
+The `icinga-installer` is a tool to install and manage your Icinga instance. It is based on OpenVox 8 and uses `YAML` configuration.
 
 ## Requirements:
 
- * Puppet >= 7.9.0 < 9
+ * OpenVox 8 (`openvox-agent` for packaged installations)
  * Rubygem `kafo`
+
+OpenVox retains the `puppet` executable, Ruby `require 'puppet'`, service name,
+and `/opt/puppetlabs` paths. Puppet module metadata therefore continues to use
+the `puppet` requirement name. Do not install the legacy Puppet runtime alongside
+OpenVox. For a source bundle, the Gemfile uses `openvox ~> 8.0`; an explicit
+version constraint can be supplied with `OPENVOX_VERSION`.
 
 ## Installation
 

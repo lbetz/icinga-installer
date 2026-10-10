@@ -1,6 +1,8 @@
-# Puppet Agent
+# OpenVox Agent
 
-By default the puppet agent is disabled by the installer. To prevent this, because maybe the host is managed by puppet after all, enter the following in `/etc/icinga-installer/custom-hiera.yaml`.
+By default the OpenVox agent service is disabled by the installer. To keep the
+host managed by OpenVox, enter the following in `/etc/icinga-installer/custom-hiera.yaml`.
+The service name `puppet` and the existing Hiera key remain unchanged for compatibility.
 
 ```yaml
 puppet::disable: false

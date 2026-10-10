@@ -2,6 +2,13 @@
 
 All commands have to be performed as user `root`.
 
+The installer uses OpenVox 8. The `openvox-agent` package supplies the compatible
+`puppet` command and the Ruby runtime under `/opt/puppetlabs/puppet/bin/ruby`.
+Do not install a legacy `puppet-agent` package alongside OpenVox. On an existing
+system, back up `/etc/puppetlabs` before replacing the runtime. The following
+instructions target fresh systems; external installer packages must also allow
+`openvox-agent` in their package dependencies.
+
 ## RHEL/AlmaLinux/Rocky 8:
 
 **Notice**: The Installer supports SELinux only for Icinga 2 out of the box. So it makes no sense to set SELinux to `enforce` for server systems but you are able to do that for agents or workers.
@@ -10,7 +17,8 @@ Icinga Web 2 >= v2.9 recommends PHP 7.3 or higher, so we have to change the defa
 
 ```bash
 dnf install -y https://packages.netways.de/extras/epel/8/noarch/netways-extras-release/netways-extras-release-8-1.el8.netways.noarch.rpm
-dnf install -y https://yum.puppet.com/puppet8-release-el-8.noarch.rpm
+dnf install -y https://yum.voxpupuli.org/openvox8-release-el-8.noarch.rpm
+dnf install -y openvox-agent
 
 dnf module reset php
 dnf module enable php:7.4
@@ -41,7 +49,8 @@ Username `<username>` and password `<password>` must be set according to your su
 
 ```bash
 dnf install -y https://packages.netways.de/extras/epel/9/noarch/netways-extras-release/netways-extras-release-9-1.el9.netways.noarch.rpm
-dnf install -y https://yum.puppet.com/puppet8-release-el-9.noarch.rpm
+dnf install -y https://yum.voxpupuli.org/openvox8-release-el-9.noarch.rpm
+dnf install -y openvox-agent
 
 dnf install -y icinga-installer
 ```
@@ -66,64 +75,79 @@ Username `<username>` and password `<password>` must be set according to your su
 ## Debian Bullseye:
 
 ```bash
-apt install wget apt-transport-https gpg
-get -O - https://packages.netways.de/netways-repo.asc | apt-key add -
-echo "deb https://packages.netways.de/extras/debian bullseye main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O - https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | apt-key add -
-echo "deb https://apt.puppetlabs.com bullseye puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+apt update
+apt install -y ca-certificates wget apt-transport-https gpg
+install -d -m 0755 /etc/apt/keyrings
+wget -O /etc/apt/keyrings/netways-repo.asc https://packages.netways.de/netways-repo.asc
+echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/debian bullseye main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-debian11.deb
+dpkg -i /tmp/openvox8-release.deb
 apt update
 
+apt install -y openvox-agent
 apt install -y icinga-installer
 ```
 
 ## Debian Bookworm:
 
 ```bash
-apt install -y wget apt-transport-https gpg
+apt update
+apt install -y ca-certificates wget apt-transport-https gpg
+install -d -m 0755 /etc/apt/keyrings
 wget -O /etc/apt/keyrings/netways-repo.asc  https://packages.netways.de/netways-repo.asc
 echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/debian bookworm main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com bookworm puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-debian12.deb
+dpkg -i /tmp/openvox8-release.deb
 apt update
 
+apt install -y openvox-agent
 apt install -y icinga-installer
 ```
 
 ## Ubuntu Focal Fossa:
 
 ```bash
+apt update
 apt install -y ca-certificates wget apt-transport-https gpg
-wget -O - https://packages.netways.de/netways-repo.asc | apt-key add -
-echo "deb https://packages.netways.de/extras/ubuntu focal main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O - https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | apt-key add -
-echo "deb https://apt.puppetlabs.com focal puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+install -d -m 0755 /etc/apt/keyrings
+wget -O /etc/apt/keyrings/netways-repo.asc https://packages.netways.de/netways-repo.asc
+echo "deb [signed-by=/etc/apt/keyrings/netways-repo.asc] https://packages.netways.de/extras/ubuntu focal main" | tee /etc/apt/sources.list.d/netways-extras-release.list
+wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu20.04.deb
+dpkg -i /tmp/openvox8-release.deb
 apt update
 
+apt install -y openvox-agent
 apt install -y icinga-installer
 ```
 
 ## Ubuntu Jammy Jellyfish:
 
 ```bash
-apt install wget apt-transport-https gpg
+apt update
+apt install -y ca-certificates wget apt-transport-https gpg
+install -d -m 0755 /etc/apt/keyrings
 wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu jammy main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com jammy puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu22.04.deb
+dpkg -i /tmp/openvox8-release.deb
 apt update
 
+apt install -y openvox-agent
 apt install -y icinga-installer
 ```
 
 ## Ubuntu Noble Numbat
 
 ```bash
-apt install wget apt-transport-https gpg
+apt update
+apt install -y ca-certificates wget apt-transport-https gpg
+install -d -m 0755 /etc/apt/keyrings
 wget -O -  https://packages.netways.de/netways-repo.asc | gpg --dearmor -o /usr/share/keyrings/netways-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/netways-archive-keyring.gpg] https://packages.netways.de/extras/ubuntu noble main" | tee /etc/apt/sources.list.d/netways-extras-release.list
-wget -O -  https://apt.puppetlabs.com/DEB-GPG-KEY-puppet-20250406 | gpg --dearmor -o /usr/share/keyrings/puppet-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/puppet-archive-keyring.gpg] https://apt.puppetlabs.com noble puppet8" | tee /etc/apt/sources.list.d/puppet8.list
+wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-ubuntu24.04.deb
+dpkg -i /tmp/openvox8-release.deb
 apt update
 
+apt install -y openvox-agent
 apt install -y icinga-installer
 ```
