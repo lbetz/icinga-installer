@@ -2,6 +2,8 @@
 icinga2::purge_features: true
 icinga2::manage_selinux: false
 icingaweb2::globals::role_replace: false
+icingaweb2::module::fileshipper::package_name: icinga-fileshipper-web
+icingaweb2::module::businessprocess::package_name: icinga-businessprocess-web
 icingaweb2::module_path:
   - /usr/local/share/icingaweb2-modules
 

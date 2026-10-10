@@ -1,5 +1,11 @@
 require 'rake/clean'
 require 'yaml'
+require 'rbconfig'
+
+unless File.realpath(RbConfig.ruby) == File.realpath('/opt/puppetlabs/puppet/bin/ruby')
+  raise 'Run rake with the Ruby bundled with openvox-agent'
+end
+ENV['PATH'] = "/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:#{ENV['PATH']}"
 
 begin
   require 'rspec/core/rake_task'
@@ -30,7 +36,7 @@ begin
     end
 
     def mod(name, options = nil)
-      if options.is_a?(Hash) && !options.include?(:ref)
+      if options.is_a?(Hash) && !options.include?(:ref) && !options.include?(:path) && !options.include?(:local)
         release = PuppetForge::Module.find(name.tr('/', '-')).current_release
         version = Semverse::Version.new(release.version)
         max = "#{version.major}.#{version.minor + 1}.0"
@@ -55,7 +61,7 @@ begin
             yield "mod '#{value}', #{padding}'#{options}'"
           else
             padding = ' ' * (max_length - value.length)
-            yield "mod '#{value}', #{padding}#{options.map { |k, v| ":#{k} => '#{v}'" }.join(', ')}"
+            yield "mod '#{value}', #{padding}#{options.map { |k, v| ":#{k} => #{v.inspect}" }.join(', ')}"
           end
         end
       end
@@ -83,9 +89,7 @@ PKGDIR = ENV['PKGDIR'] || File.expand_path('pkg')
 
 SCENARIOS = ['server-db-mysql', 'server-db-pgsql', 'server-ido-mysql', 'server-ido-pgsql', 'worker', 'agent'].freeze
 
-exporter_dirs = ENV['PATH'].split(':').push('/usr/bin', ENV['KAFO_EXPORTER'])
-exporter = exporter_dirs.find { |dir| File.executable? "#{dir}/kafo-export-params" } or
-  raise("kafo-export-paths is missing from PATH, install kafo")
+exporter = Gem.bin_path('kafo', 'kafo-export-params')
 
 directory BUILDDIR
 directory PKGDIR
@@ -116,11 +120,11 @@ SCENARIOS.each do |scenario|
   end
 
   file "#{BUILDDIR}/parser_cache/#{scenario}.yaml" => [config, "#{BUILDDIR}/modules", "#{BUILDDIR}/parser_cache"] do |t|
-    sh "#{exporter}/kafo-export-params -c #{t.prerequisites.first} -f parsercache --no-parser-cache -o #{t.name}"
+    sh RbConfig.ruby, exporter, '-c', t.prerequisites.first, '-f', 'parsercache', '--no-parser-cache', '-o', t.name
   end
 
   file "#{BUILDDIR}/#{scenario}-options.asciidoc" => [config, "#{BUILDDIR}/parser_cache/#{scenario}.yaml"] do |t|
-    sh "#{exporter}/kafo-export-params -c #{t.prerequisites.first} -f asciidoc -o #{t.name}"
+    sh RbConfig.ruby, exporter, '-c', t.prerequisites.first, '-f', 'asciidoc', '-o', t.name
   end
 
   file "#{BUILDDIR}/config/#{scenario}.yaml" => ["config/#{scenario}.yaml", "#{BUILDDIR}/config"] do |t|
@@ -139,14 +143,17 @@ file "#{BUILDDIR}/icinga-installer" => 'bin/icinga-installer' do |t|
 end
 
 directory "#{BUILDDIR}/modules"
-file "#{BUILDDIR}/modules" => BUILDDIR do |_t|
+file "#{BUILDDIR}/modules/.installed" => [BUILDDIR, 'Puppetfile', 'modules/install/metadata.json'] do |t|
+  mkdir_p "#{BUILDDIR}/modules"
   if Dir["modules/*"].include?('modules/install') and Dir["modules/*"].length < 2
     cp_r "modules/install/", "#{BUILDDIR}/modules"
-    sh "r10k puppetfile install --verbose --moduledir=#{BUILDDIR}/modules"
+    sh RbConfig.ruby, Gem.bin_path('librarian-puppet', 'librarian-puppet'), 'install', '--path', "#{BUILDDIR}/modules"
   else
     cp_r "modules/", BUILDDIR
   end
+  touch t.name
 end
+task "#{BUILDDIR}/modules" => "#{BUILDDIR}/modules/.installed"
 
 directory "#{BUILDDIR}/config"
 

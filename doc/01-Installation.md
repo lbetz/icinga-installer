@@ -2,8 +2,11 @@
 
 All commands have to be performed as user `root`.
 
-The installer uses OpenVox 8. The `openvox-agent` package supplies the compatible
+The installer uses OpenVox >= 8.24 < 9. The `openvox-agent` package supplies the compatible
 `puppet` command and the Ruby runtime under `/opt/puppetlabs/puppet/bin/ruby`.
+Use this bundled Ruby for Bundler, gem installation, tests and release tools;
+do not install a separate system Ruby for the installer. Source builds use
+OpenVox Strings instead of Puppet Strings; see the source-build steps in the README.
 Do not install a legacy `puppet-agent` package alongside OpenVox. On an existing
 system, back up `/etc/puppetlabs` before replacing the runtime. The following
 instructions target fresh systems; external installer packages must also allow

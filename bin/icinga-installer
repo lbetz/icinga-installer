@@ -1,8 +1,8 @@
 #!/opt/puppetlabs/puppet/bin/ruby
 require 'rubygems'
+ENV['PATH'] = "/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:#{ENV['PATH']}"
 require 'kafo'
 
-ENV['PATH'] += ':/opt/puppetlabs/bin'
 CONFIG_DIR = 'config/'
 
 # Run the install

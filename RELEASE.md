@@ -17,13 +17,14 @@ git commit -am "Update AUTHORS"
 cd modules/install
 ```
 
-If it is not installed [puppet-strings]:
+Use the Ruby environment from `openvox-agent` (OpenVox >= 8.24 < 9, Ruby >= 3.2)
+for every Ruby-based release tool. If [OpenVox Strings] is not installed:
 ``` bash
-gem install puppet-strings --no-ri --no-rdoc
+/opt/puppetlabs/puppet/bin/gem install openvox-strings -v '~> 7.2' --no-document
 ```
-Generate [REFERENCE.md] via [Puppet Strings]
+Generate [REFERENCE.md] via [OpenVox Strings]
 ``` bash
-puppet strings generate --format markdown --out ../../REFERENCE.md
+/opt/puppetlabs/bin/puppet strings generate --format markdown --out ../../REFERENCE.md
 ```
 
 ## 3. Version
@@ -37,15 +38,18 @@ cd -
 ```
 
 ```bash
-gem install github_changelog_generator -v 1.13.2
+/opt/puppetlabs/puppet/bin/gem install github_changelog_generator --no-document
 ```
 
 Generate [CHANGELOG.md]
 ```bash
-github_changelog_generator -t <github-access-token> --future-release=v1.0.0 -u netways -p icinga-installer
+/opt/puppetlabs/puppet/bin/github_changelog_generator --future-release=v1.0.0 -u netways -p icinga-installer
 ```
 
 ## 5. Git Tag
+Provide the GitHub token through the tool's `CHANGELOG_GITHUB_TOKEN` environment
+variable, not a command-line argument or a committed file.
+
 Commit all changes to the `main` branch
 
 ``` bash
@@ -66,7 +70,7 @@ git push --tags
 ```
 
 [github-changelog-generator]: https://github.com/skywinder/github-changelog-generator
-[Puppet Strings]: https://puppet.com/docs/puppet/5.5/puppet_strings.html
+[OpenVox Strings]: https://github.com/voxpupuli/openvox-strings
 [SemVer 1.0.0]: http://semver.org/spec/v1.0.0.html
 [CHANGELOG.md]: CHANGELOG.md
 [AUTHORS]: AUTHORS
