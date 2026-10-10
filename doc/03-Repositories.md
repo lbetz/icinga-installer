@@ -55,20 +55,18 @@ icinga::repos:
 icinga::repos:
   icinga-stable-release:
     location: https://repo.example.com/icinga/debian
-    release: icinga-bullseye
+    release: icinga-bookworm
     repos: main
     key:
-      source: https://repo.example.com/debian/bullseye.asc
+      source: https://repo.example.com/debian/bookworm.asc
 ```
 
 Also the Backports repo on Debian can be configured like the apt class of course, see [apt::backports](https://github.com/puppetlabs/puppetlabs-apt/blob/main/REFERENCE.md#apt--backports).
 
-NOTICE: Backports is required for Debian Buster!
-
 ```yaml
 apt::backports::location: https://repo.example.com/debian
-apt::backports::release:: buster-backports
+apt::backports::release: bookworm-backports
 apt::backports::repos: main universe restricted
 apt::backports::key:
-  source: https://repo.example.com/debian/buster.asc
+  source: https://repo.example.com/debian/bookworm.asc
 ```

@@ -75,23 +75,6 @@ icinga::repos:
 Username `<username>` and password `<password>` must be set according to your subscription.
 
 
-## Debian Bullseye:
-
-```bash
-apt update
-apt install -y ca-certificates wget apt-transport-https gpg
-install -d -m 0755 /etc/apt/keyrings
-wget -O /etc/apt/keyrings/prefork-packages.asc https://packages.private.prefork.de/keys/prefork-packages.asc
-chmod 0644 /etc/apt/keyrings/prefork-packages.asc
-echo "deb [signed-by=/etc/apt/keyrings/prefork-packages.asc] https://packages.private.prefork.de/debian bullseye main" | tee /etc/apt/sources.list.d/prefork-packages.list
-wget -O /tmp/openvox8-release.deb https://apt.voxpupuli.org/openvox8-release-debian11.deb
-dpkg -i /tmp/openvox8-release.deb
-apt update
-
-apt install -y openvox-agent
-apt install -y icinga-installer
-```
-
 ## Debian Bookworm:
 
 ```bash
@@ -108,12 +91,6 @@ apt update
 apt install -y openvox-agent
 apt install -y icinga-installer
 ```
-
-## Ubuntu Focal Fossa:
-
-The Prefork repository does not provide a `focal` suite. Use Ubuntu Jammy or
-Noble for installation from this repository; do not use packages from another
-Ubuntu release on Focal.
 
 ## Ubuntu Jammy Jellyfish:
 
