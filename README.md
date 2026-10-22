@@ -21,10 +21,13 @@ JSON 3 is incompatible with the OpenVox 8 module-install API.
 
 On a disposable Linux system with `openvox-agent` installed, run as root:
 
+Install Bolt (or OpenBolt) separately and ensure `bolt` is on `PATH`.
+
 ```sh
 export PATH="/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH"
 /opt/puppetlabs/puppet/bin/ruby --version
 /opt/puppetlabs/bin/puppet --version
+bolt --version
 /opt/puppetlabs/puppet/bin/bundle config set --local path.system true
 /opt/puppetlabs/puppet/bin/bundle config set --local disable_shared_gems false
 /opt/puppetlabs/puppet/bin/bundle install
@@ -37,7 +40,10 @@ Do not isolate gems in `vendor/bundle`: Kafo's AIO subprocesses clear Bundler
 environment overrides, so OpenVox Strings must be installed in the agent's gem
 environment. The executable already has the AIO Ruby shebang; build subprocesses
 also use that interpreter explicitly. `build` installs Forge modules with
-Librarian-Puppet 7 and generates parser caches for all scenarios. It does not
+`bolt module install --no-resolve` in a separate project under `_build`, copies
+them to `_build/modules`, and adds the local `install` module. It generates
+parser caches for all scenarios. Bolt runs outside the installer's Bundler
+environment and uses its own runtime. The build does not
 install the Icinga services on the system.
 
 On a completely fresh container, an installer `--noop` run can compile the
@@ -62,7 +68,8 @@ The Puppetfile pins the newest jointly compatible Forge releases checked on
 | puppet/systemd | 9.4.0 | puppet/redis 13.1 requires systemd < 10 |
 | puppetlabs/concat | 9.1.0 | puppet/zypprepo 5.0 requires concat < 10; icinga requires zypprepo < 6 |
 
-The local `install` module uses a filesystem source. Do not independently upgrade
+The local `install` module is copied from `modules/install` by the build task
+and is not listed in the Puppetfile. Do not independently upgrade
 every pin to the newest Forge release without checking all dependency ranges.
 
 ## Installation

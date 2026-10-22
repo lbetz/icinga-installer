@@ -21,7 +21,6 @@ gem 'json', "= #{aio_json.version}", :require => false
 end
 
 gem 'kafo', '~> 7.8'
-gem 'librarian-puppet', '~> 7.0'
 gem 'openvox-strings', '~> 7.2', :require => false
 gem 'rake'
 

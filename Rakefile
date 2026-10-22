@@ -1,6 +1,7 @@
 require 'rake/clean'
 require 'yaml'
 require 'rbconfig'
+require 'bundler'
 
 unless File.realpath(RbConfig.ruby) == File.realpath('/opt/puppetlabs/puppet/bin/ruby')
   raise 'Run rake with the Ruby bundled with openvox-agent'
@@ -145,12 +146,13 @@ end
 directory "#{BUILDDIR}/modules"
 file "#{BUILDDIR}/modules/.installed" => [BUILDDIR, 'Puppetfile', 'modules/install/metadata.json'] do |t|
   mkdir_p "#{BUILDDIR}/modules"
-  if Dir["modules/*"].include?('modules/install') and Dir["modules/*"].length < 2
-    cp_r "modules/install/", "#{BUILDDIR}/modules"
-    sh RbConfig.ruby, Gem.bin_path('librarian-puppet', 'librarian-puppet'), 'install', '--path', "#{BUILDDIR}/modules"
-  else
-    cp_r "modules/", BUILDDIR
+  cp 'Puppetfile', "#{BUILDDIR}/Puppetfile"
+  File.write("#{BUILDDIR}/bolt-project.yaml", { 'name' => 'icinga_installer_build' }.to_yaml)
+  Bundler.with_unbundled_env do
+    sh 'bolt', 'module', 'install', '--no-resolve', '--project', BUILDDIR
   end
+  cp_r Dir["#{BUILDDIR}/.modules/*"], "#{BUILDDIR}/modules"
+  cp_r 'modules/install', "#{BUILDDIR}/modules"
   touch t.name
 end
 task "#{BUILDDIR}/modules" => "#{BUILDDIR}/modules/.installed"

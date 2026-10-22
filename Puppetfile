@@ -19,6 +19,3 @@ mod 'puppet/icinga', '7.2.0'
 mod 'puppet/selinux', '6.0.0'
 mod 'puppet/zypprepo', '5.0.0'
 mod 'puppetlabs/vcsrepo', '8.0.0'
-
-mod 'install',
-  :path => './modules/install'
