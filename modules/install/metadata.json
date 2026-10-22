@@ -75,10 +75,6 @@
   ],
   "requirements": [
     {
-      "name": "puppet",
-      "version_requirement": ">= 8.24.0 < 9.0.0"
-    },
-    {
       "name": "openvox",
       "version_requirement": ">= 8.24.0 < 9.0.0"
     }
