@@ -31,7 +31,6 @@ class install::server (
     'notice', 'warning', 'critical'
   ]                        $logging_level      = 'critical',
 ) inherits install::params {
-
   class { 'icinga::server':
     ca                => $ca,
     config_server     => lookup('icinga::server::config_server', undef, undef, $ca),
@@ -44,5 +43,4 @@ class install::server (
     logging_level     => $logging_level,
     run_web           => true,
   }
-
 }

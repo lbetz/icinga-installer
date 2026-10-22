@@ -58,6 +58,8 @@
 #
 # $elasticsearch::             Enable Elasticsearch feature?
 #
+# $elastic_password::          Password for elasticsearch authentication.
+#
 # === Elasticsearch:           condition: $elasticsearch
 #
 # $elastic_host::              Elasticsearch host address.

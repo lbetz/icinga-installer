@@ -7,5 +7,5 @@
 class install::plugins (
   Variant[String, Array[String]] $basic_plugins = $install::params::basic_plugins,
 ) inherits install::params {
-  package { $basic_plugins: } 
+  package { $basic_plugins: }
 }

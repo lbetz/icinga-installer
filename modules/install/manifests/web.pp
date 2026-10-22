@@ -136,7 +136,7 @@ class install::web (
   String                   $db_name                   = 'icingaweb2',
   String                   $db_username               = 'icingaweb2',
   String                   $db_password               = $install::params::web_db_password,
-  Boolean                  $create_database           = false,  
+  Boolean                  $create_database           = false,
   Stdlib::Host             $api_host                  = 'localhost',
   String                   $api_password              = $install::params::web_api_password,
   Boolean                  $icingadb                  = false,
@@ -187,7 +187,7 @@ class install::web (
       db_name         => $ido_db_name,
       db_user         => $ido_db_username,
       db_pass         => $ido_db_password,
-      manage_database => $ido_create_database,  
+      manage_database => $ido_create_database,
     }
   }
 
@@ -268,33 +268,33 @@ class install::web (
       $new_file_content = "# content removed by icinga-installer\n# https://github.com/NETWAYS/icinga-installer/issues/24\n"
 
       file { prefix([
-        '/00-base.conf',
-        '/00-dav.conf',
-        '/00-lua.conf',
-        '/00-mpm.conf',
-        '/00-optional.conf',
-        '/00-proxy.conf',
-        '/00-ssl.conf',
-        '/00-systemd.conf',
-        '/01-cgi.conf',
-        '/10-h2.conf',
-        '/10-proxy_h2.conf',
-        '/15-php.conf'], $::apache::mod_dir) + prefix([
-        '/autoindex.conf',
-        '/php.conf',
-        '/ssl.conf',
-        '/userdir.conf',
-        '/wellcome.conf'], $::apache::confd_dir):
-        ensure  => file,
-        content => $new_file_content,
-        notify => Class['apache::service'],
-      }
-  
-      if Integer($facts['os']['release']['major']) < 8 {
-        file { prefix(['/autoindex.conf', '/userdir.conf', '/welcome.conf'], $::apache::confd_dir):
+          '/00-base.conf',
+          '/00-dav.conf',
+          '/00-lua.conf',
+          '/00-mpm.conf',
+          '/00-optional.conf',
+          '/00-proxy.conf',
+          '/00-ssl.conf',
+          '/00-systemd.conf',
+          '/01-cgi.conf',
+          '/10-h2.conf',
+          '/10-proxy_h2.conf',
+        '/15-php.conf'], $apache::mod_dir) + prefix([
+          '/autoindex.conf',
+          '/php.conf',
+          '/ssl.conf',
+          '/userdir.conf',
+        '/wellcome.conf'], $apache::confd_dir):
           ensure  => file,
           content => $new_file_content,
-          notify => Class['apache::service'],
+          notify  => Class['apache::service'],
+      }
+
+      if Integer($facts['os']['release']['major']) < 8 {
+        file { prefix(['/autoindex.conf', '/userdir.conf', '/welcome.conf'], $apache::confd_dir):
+          ensure  => file,
+          content => $new_file_content,
+          notify  => Class['apache::service'],
         }
       }
     }
@@ -319,7 +319,7 @@ class install::web (
         ensure => absent,
       }
     }
-  
+
     if $business_process {
       class { 'icingaweb2::module::businessprocess':
         install_method => 'package',
