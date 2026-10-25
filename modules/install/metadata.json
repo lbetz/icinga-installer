@@ -1,12 +1,12 @@
 {
   "name": "icinga-installer",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "NETWAYS",
   "summary": "Puppet Module for the Icinga-Installer.",
   "license": "Apache-2.0",
-  "source": "git://github.com/netways/icinga-installer",
-  "project_page": "https://github.com/netways/icinga-installer",
-  "issues_url": "https://github.com/netways/icinga-installer/issues",
+  "source": "git://github.com/lbetz/icinga-installer",
+  "project_page": "https://github.com/lbetz/icinga-installer",
+  "issues_url": "https://github.com/lbetz/icinga-installer/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -76,7 +76,7 @@
   "requirements": [
     {
       "name": "openvox",
-      "version_requirement": ">= 8.24.0 < 9.0.0"
+      "version_requirement": ">= 8.0.0 < 9.0.0"
     }
   ],
   "tags": [
