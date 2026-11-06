@@ -1,2 +1,2 @@
 ---
-icinga2::manage_selinux: true
+icinga::manage_selinux: true
