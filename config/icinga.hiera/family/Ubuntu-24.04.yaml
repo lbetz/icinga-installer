@@ -1,5 +1,0 @@
----
-mysql::server::override_options:
-  mysqld:
-    'log-error': ~
-php::globals::php_version: '8.3'
