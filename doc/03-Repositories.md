@@ -30,8 +30,8 @@ To change to a non upstream repository, e.g. a local mirror, the repos can be cu
 
 * icinga-stable-release
 * epel (only on RHEL platforms)
-* powertools (only RHEL 8 platforms)
-* crb (only RHEL 9 platforms)
+* powertools (only on RHEL 8 platforms)
+* crb (only on RHEL 9/10 platforms)
 * netways-plugins
 * netways-extras
 

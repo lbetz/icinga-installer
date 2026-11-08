@@ -48,15 +48,6 @@ icingaweb2::module::icingadb::db_tls_cacert_file: <location of cacert, if db_tls
 
 For more details, see classes [icingadb](https://github.com/Icinga/puppet-icingadb/blob/main/REFERENCE.md#icingadb) and [icingaweb2::module::icingadb](https://github.com/Icinga/puppet-icingaweb2/blob/master/REFERENCE.md#icingaweb2moduleicingadb).
 
-### IDO
-
-```yaml
-install::web::ido_db_type: <mysql|pgsql>
-install::web::ido_db_host: <ip addr remote database host>
-install::web::ido_db_password: *****
-install::web::ido_create_database: false
-```
-
 ### Director
 
 ```yaml

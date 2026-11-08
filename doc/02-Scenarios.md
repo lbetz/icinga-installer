@@ -3,7 +3,6 @@
 ## Servers
 
 * server-db-mysql|server-db-pgsql: Install Server based on MySQL|PostgreSQL with IcingaDB as Backend.
-* server-ido-mysql|server-ido-pgsql: same but with the deprecated IDO Backend instead of IcingaDB.
 
 If your server should have connected workers, you have to configure those in `/etc/icinga-installer/custom-hiera.yaml`:
 
